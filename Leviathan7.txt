@@ -1,0 +1,249 @@
+### ssh leviathan.labs.overthewire.org -l leviathan6 -p 2223
+                   _            _       _   _
+                  | | _____   _(_) __ _| |_| |__   __ _ _ __
+                  | |/ _ \ \ / / |/ _` | __| '_ \ / _` | '_ \
+                  | |  __/\ V /| | (_| | |_| | | | (_| | | | |
+                  |_|\___| \_/ |_|\__,_|\__|_| |_|\__,_|_| |_|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+leviathan6@leviathan.labs.overthewire.org's password:
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * peda (https://github.com/longld/peda.git) in /opt/peda/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+ Both python2 and python3 are installed.
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+leviathan6@gibson:~$ ls -la
+total 36
+drwxr-xr-x  2 root       root        4096 Apr 23 18:05 .
+drwxr-xr-x 83 root       root        4096 Apr 23 18:06 ..
+-rw-r--r--  1 root       root         220 Jan  6  2022 .bash_logout
+-rw-r--r--  1 root       root        3771 Jan  6  2022 .bashrc
+-r-sr-x---  1 leviathan7 leviathan6 15024 Apr 23 18:05 leviathan6
+-rw-r--r--  1 root       root         807 Jan  6  2022 .profile
+leviathan6@gibson:~$ file leviathan6
+leviathan6: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=b946d7a1e1d2e52404c75c7a5410c61151b63bce, for GNU/Linux 3.2.0, not stripped
+leviathan6@gibson:~$ ./leviathan6
+usage: ./leviathan6 <4 digit code>
+leviathan6@gibson:~$ ./leviathan6 24645
+Wrong
+leviathan6@gibson:~$ ltrace ./leviathan6
+__libc_start_main(0x80491d6, 1, 0xffffd5f4, 0 <unfinished ...>
+printf("usage: %s <4 digit code>\n", "./leviathan6"usage: ./leviathan6 <4 digit code>
+) = 35
+exit(-1 <no return ...>
++++ exited (status 255) +++
+leviathan6@gibson:~$ gdb --args leviathan6 0000
+GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from leviathan6...
+(No debugging symbols found in leviathan6)
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x080491d6 <+0>:     lea    0x4(%esp),%ecx
+   0x080491da <+4>:     and    $0xfffffff0,%esp
+   0x080491dd <+7>:     push   -0x4(%ecx)
+   0x080491e0 <+10>:    push   %ebp
+   0x080491e1 <+11>:    mov    %esp,%ebp
+   0x080491e3 <+13>:    push   %ebx
+   0x080491e4 <+14>:    push   %ecx
+   0x080491e5 <+15>:    sub    $0x10,%esp
+   0x080491e8 <+18>:    mov    %ecx,%eax
+   0x080491ea <+20>:    movl   $0x1bd3,-0xc(%ebp)
+   0x080491f1 <+27>:    cmpl   $0x2,(%eax)
+   0x080491f4 <+30>:    je     0x8049216 <main+64>
+   0x080491f6 <+32>:    mov    0x4(%eax),%eax
+   0x080491f9 <+35>:    mov    (%eax),%eax
+   0x080491fb <+37>:    sub    $0x8,%esp
+   0x080491fe <+40>:    push   %eax
+   0x080491ff <+41>:    push   $0x804a008
+   0x08049204 <+46>:    call   0x8049050 <printf@plt>
+   0x08049209 <+51>:    add    $0x10,%esp
+   0x0804920c <+54>:    sub    $0xc,%esp
+   0x0804920f <+57>:    push   $0xffffffff
+   0x08049211 <+59>:    call   0x8049090 <exit@plt>
+   0x08049216 <+64>:    mov    0x4(%eax),%eax
+   0x08049219 <+67>:    add    $0x4,%eax
+   0x0804921c <+70>:    mov    (%eax),%eax
+   0x0804921e <+72>:    sub    $0xc,%esp
+   0x08049221 <+75>:    push   %eax
+   0x08049222 <+76>:    call   0x80490b0 <atoi@plt>
+   0x08049227 <+81>:    add    $0x10,%esp
+--Type <RET> for more, q to quit, c to continue without paging--
+c
+   0x0804922a <+84>:    cmp    %eax,-0xc(%ebp)
+   0x0804922d <+87>:    jne    0x804925a <main+132>
+   0x0804922f <+89>:    call   0x8049060 <geteuid@plt>
+   0x08049234 <+94>:    mov    %eax,%ebx
+   0x08049236 <+96>:    call   0x8049060 <geteuid@plt>
+   0x0804923b <+101>:   sub    $0x8,%esp
+   0x0804923e <+104>:   push   %ebx
+   0x0804923f <+105>:   push   %eax
+   0x08049240 <+106>:   call   0x80490a0 <setreuid@plt>
+   0x08049245 <+111>:   add    $0x10,%esp
+   0x08049248 <+114>:   sub    $0xc,%esp
+   0x0804924b <+117>:   push   $0x804a022
+   0x08049250 <+122>:   call   0x8049080 <system@plt>
+   0x08049255 <+127>:   add    $0x10,%esp
+   0x08049258 <+130>:   jmp    0x804926a <main+148>
+   0x0804925a <+132>:   sub    $0xc,%esp
+   0x0804925d <+135>:   push   $0x804a02a
+   0x08049262 <+140>:   call   0x8049070 <puts@plt>
+   0x08049267 <+145>:   add    $0x10,%esp
+   0x0804926a <+148>:   mov    $0x0,%eax
+   0x0804926f <+153>:   lea    -0x8(%ebp),%esp
+   0x08049272 <+156>:   pop    %ecx
+   0x08049273 <+157>:   pop    %ebx
+   0x08049274 <+158>:   pop    %ebp
+   0x08049275 <+159>:   lea    -0x4(%ecx),%esp
+   0x08049278 <+162>:   ret
+End of assembler dump.
+(gdb) break *0x0804922a
+Breakpoint 1 at 0x804922a
+(gdb) run
+Starting program: /home/leviathan6/leviathan6 0000
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, 0x0804922a in main ()
+(gdb) info registers
+eax            0x0                 0
+ecx            0x0                 0
+edx            0xffffd71e          -10466
+ebx            0xf7e2a000          -136142848
+esp            0xffffd4c0          0xffffd4c0
+ebp            0xffffd4d8          0xffffd4d8
+esi            0xffffd5a4          -10844
+edi            0xf7ffcb80          -134231168
+eip            0x804922a           0x804922a <main+84>
+eflags         0x286               [ PF SF IF ]
+cs             0x23                35
+ss             0x2b                43
+ds             0x2b                43
+es             0x2b                43
+fs             0x0                 0
+gs             0x63                99
+k0             0x0                 0
+k1             0x0                 0
+k2             0x0                 0
+k3             0x0                 0
+k4             0x0                 0
+k5             0x0                 0
+k6             0x0                 0
+k7             0x0                 0
+(gdb) print $ebp-0xc
+$1 = (void *) 0xffffd4cc
+(gdb) x 0xffffd4cc
+0xffffd4cc:     0x00001bd3
+(gdb) print/d 0x00001bd3
+$2 = 7123
+(gdb) exit
+A debugging session is active.
+
+        Inferior 1 [process 4129245] will be killed.
+
+Quit anyway? (y or n) y
+leviathan6@gibson:~$ ./leviathan6 7123
+$ whoami
+leviathan7
+$ cat /etc/leviathan_pass/leviathan7
+8GpZ5f8Hze
+$ exit
+leviathan6@gibson:~$ exit
+logout
+Connection to leviathan.labs.overthewire.org closed.
