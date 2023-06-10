@@ -9,3 +9,10 @@ Welcome to the first assignment of the IITK project, where we embark on a journe
 We are going to be practising [over the wire Leviathan](https://overthewire.org/wargames/leviathan/) challenge. Try them before the next session without seeing the solution, study topics regarding them such as ssh and Linux commands. I(here, Shubh) will soon be posting the write-up for them. then solve them on your own strictly. Bcoz In your mid-term evaluation, we will give you our own CTFs whose solutions you won’t find on the internet.
 
 So, get set, go! Happy hacking.
+
+## Assignment 1
+
+For assignment on web exploitaion:
+
+Solve at least 6 diffeent methods in DVWA till medium-high difficulty & submit their writups in markdown format with attached screenshots.
+
