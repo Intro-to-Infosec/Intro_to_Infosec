@@ -1,0 +1,116 @@
+LEVEL 0-1
+
+kunalkumarthakur@kunalkumarthakur-HP-255-G8-Notebook-PC:~$ ssh -p 2223 leviathan0@leviathan.labs.overthewire.org   //entered into the server through this 
+                                                                                                                     command
+leviathan0@gibson:~$ ls -a                                //showed the hidden directories  in it through this command
+.  ..  .backup  .bash_logout  .bashrc  .profile 
+leviathan0@gibson:~$ cd .backup                           //opened .backups directory
+leviathan0@gibson:~/.backup$ ls                            //showed content of backup directories through ls command
+bookmarks.html                                            //there is a file name bookmarks.html 
+leviathan0@gibson:~/.backup$ grep leviathan1 bookmarks.html    //search for leviathan1 in this file using grep command and got the password for level 1
+<DT><A HREF="http://leviathan.labs.overthewire.org/passwordus.html | This will be fixed later, the password for leviathan1 is PPIfmI1qsA" ADD_DATE="1155384634" LAST_CHARSET="ISO-8859-1" ID="rdf:#$2wIU71">password to leviathan1</A>
+
+
+LEVEL 1-2
+
+kunalkumarthakur@kunalkumarthakur-HP-255-G8-Notebook-PC:~$ ssh -p 2223 leviathan1@leviathan.labs.overthewire.org  //enter into this server using previous 
+                                                                                                                    password
+
+leviathan1@gibson:~$ ls -a                                                 //using this command show the hidden files and directoris
+.  ..  .bash_logout  .bashrc  check  .profile
+leviathan1@gibson:~$ ./check                                               //open check file using this command then it will ask for password
+password: 12345
+Wrong password, Good Bye ...
+leviathan1@gibson:~$ ltrace ./check                                       //to get the password execute file using ltrace command 
+__libc_start_main(0x80491e6, 1, 0xffffd5f4, 0 <unfinished ...>
+printf("password: ")                                                                                                         
+getchar(0xf7fbe4a0, 0xf7fd6f80, 0x786573, 0x646f67password: jkk
+)                                                                          
+getchar(0xf7fbe4a0, 0xf7fd6f6a, 0x786573, 0x646f67)                                                                          
+getchar(0xf7fbe4a0, 0xf7fd6b6a, 0x786573, 0x646f67)                                                                          
+strcmp("jkk", "sex")                                                                                                       
+puts("Wrong password, Good Bye ..."Wrong password, Good Bye ...
+)                                                                                         
++++ exited (status 0) +++
+leviathan1@gibson:~$ ./check                                             //open file using previous password
+password: sex
+$ whoami
+leviathan2
+$ cat /etc/leviathan_pass/leviathan2                                   //open leviathan2 in this directory 
+mEh5PNl10e                                                             //here is required password
+
+LEVEL 2-3
+
+    ssh -p 2223 leviathan2@leviathan.labs.overthewire.org                     //enter into the server using previous password
+     eviathan2@gibson:~$ mkdir /tmp/iitk && touch /tmp/iitk/file.txt          //create a temporary directory name iitk inside tmp and also   create a                                                                         file in this directory name file.txt
+leviathan2@gibson:~$ cd /tmp/iitk                                             //open iitk directory
+leviathan2@gibson:/tmp/iitk$ ltrace ~/printfile file.txt                //The command ltrace ~/printfile test.txt uses the ltrace tool to trace library c                                                                   made by the program printfile when it is executed with the argument test.txt            
+__libc_start_main(0x80491e6, 2, 0xffffd5a4, 0 <unfinished ...>
+access("file.txt", 4)                            = 0
+snprintf("/bin/cat file.txt", 511, "/bin/cat %s", "file.txt") = 17
+geteuid()                                        = 12002
+geteuid()                                        = 12002
+setreuid(12002, 12002)                           = 0
+system("/bin/cat file.txt" <no return ...>
+--- SIGCHLD (Child exited) ---
+<... system resumed> )                           = 0
++++ exited (status 0) +++
+
+leviathan2@gibson:/tmp/iitk$ touch pass\ file.txt                    //The provided commands demonstrate the creation of a file named "pass file.txt" and t                                                                   usage of the ltrace command to trace library calls made by the program printfile leviathan2@gibson:/tmp/iitk$ ltrace ~/printfile "pass file.txt"
+__libc_start_main(0x80491e6, 2, 0xffffd5a4, 0 <unfinished ...>
+access("pass file.txt", 4)                       = 0
+snprintf("/bin/cat pass file.txt", 511, "/bin/cat %s", "pass file.txt") = 22
+geteuid()                                        = 12002
+geteuid()                                        = 12002
+setreuid(12002, 12002)                           = 0
+system("/bin/cat pass file.txt"/bin/cat: pass: No such file or directory
+ <no return ...>
+--- SIGCHLD (Child exited) ---
+<... system resumed> )                           = 256
++++ exited (status 0) +++
+leviathan2@gibson:/tmp/iitk$ ln -s /etc/leviathan_pass/leviathan3/tmp/iitk/pass   //link both directory
+leviathan2@gibson:/tmp/iitk$ ls -la                                              //show hidden directories using this command
+total 200
+drwxrwxr-x    2 leviathan2 leviathan2   4096 May 22 06:50 .
+drwxrwx-wt 5307 root       root       196608 May 22 06:50 ..
+-rw-rw-r--    1 leviathan2 leviathan2      0 May 22 06:46 file.txt
+lrwxrwxrwx    1 leviathan2 leviathan2     44 May 22 06:50 pass -> /etc/leviathan_pass/leviathan3/tmp/iitk/pass
+-rw-rw-r--    1 leviathan2 leviathan2      0 May 22 06:46 pass file.txt
+leviathan2@gibson:/tmp/iitk$ ~/printfile "pass file.txt"                        //The command /tmp/iitk$ ~/printfile "pass file.txt" attempts to execute Ahdiemoo1j                                                                            printfile program with the argument "pass file.txt
+
+
+LEVEL 3-4(this is same as level 1-2)
+
+1)use ls -la command to show all hidden directories
+2)open file named level3 using ./level3 command it will ask for password
+3)to get the password use ltrace command to know the calls made by level3 file
+4)we will find a strcmp(("1234\n", "snlprintf\n") it shows that password for file is "snlprintf" as it compare the enterd string with this string
+5)enter into the level3 file using this password
+6)open leviathan4 file using  cat /etc/leviathan_pass/leviathan4 
+7)we will get password for next level as vuH0coox6m
+
+
+level 4-5
+leviathan4@melinda:~$ ls -la         //open the hidden directories and file
+total 24
+drwxr-xr-x   3 root root       4096 Nov 14  2014 .
+drwxr-xr-x 172 root root       4096 Jul 10 14:12 ..
+-rw-r--r--   1 root root        220 Apr  9  2014 .bash_logout
+-rw-r--r--   1 root root       3637 Apr  9  2014 .bashrc
+-rw-r--r--   1 root root        675 Apr  9  2014 .profile
+dr-xr-x---   2 root leviathan4 4096 Nov 14  2014 .trash
+leviathan4@melinda:~$ cd .trash                    //open .trash directory using cd command
+leviathan4@melinda:~/.trash$ ls -la                //open hidden files and directories 
+total 16
+dr-xr-x--- 2 root       leviathan4 4096 Nov 14  2014 .
+drwxr-xr-x 3 root       root       4096 Nov 14  2014 ..
+-r-sr-x--- 1 leviathan5 leviathan4 7425 Nov 14  2014 bin
+leviathan4@melinda:~/.trash$ ./bin             //open bin file using this command
+01010100 01101001 01110100 01101000 00110100 01100011 01101111 01101011 01100101 01101001 00001010    //this is binary code convert it into actual l                                                                                              language to get password for next level
+
+
+LEVEL 5-6
+couldnot able to done
+
+
+
