@@ -16,3 +16,7 @@ For assignment on web exploitaion:
 
 Solve at least 6 diffeent methods in DVWA till medium-high difficulty & submit their writups in markdown format with attached screenshots.
 
+## Assignment 2
+
+Complete any 4 levels from [Microcorruption.com](https://www.microcorruption.com) and upload their writups.
+
